@@ -1,6 +1,11 @@
+# Python-generated files
+.idea/*
+.vscode/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
+*.py[oc]
 *$py.class
 
 # C extensions
@@ -25,6 +30,10 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# UV-specific files
+.uv/
+uv.lock
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
