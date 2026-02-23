@@ -1,12 +1,47 @@
 # Python Pokédex
 
-A Pokédex application developed in Python 3.11.14 using the **Kivy** framework for building cross-platform graphical user interfaces, with data dynamically fetched from the **PokeAPI**—a free and comprehensive RESTful API for Pokémon game data.
+A modern, feature‑rich Pokédex desktop application built with **Kivy** and powered by a custom FastAPI backend that aggregates data from the [PokeAPI](https://pokeapi.co).
+Explore Pokémon with an intuitive interface, real‑time search, and detailed information presented in elegantly organized tabs.
 
 ## Description
 
 This project is a desktop Pokédex application that allows users to search, browse, and view detailed information about Pokémon species. It leverages the **Kivy** framework—an open-source Python library for rapid development of applications that make use of innovative user interfaces, including multi-touch apps—to create an interactive and visually engaging experience. All Pokémon data is retrieved in real-time from the **PokeAPI**, a reliable and extensive public API that provides structured information on Pokémon games, species, moves, types, and more.
 
-## Main Technologies
+## ✨ Features
+
+- **Smart Search** 
+    - Look up Pokémon by **ID** or **name**.
+    - **Autocomplete suggestions** display sprite, ID, name, and types as you type.
+
+
+- **Interactive Pokédex List** 
+    - Left panel shows a scrollable, paginated list of Pokémon (20 per page).
+    - Click any entry to load its details instantly.
+
+
+- **Rich Detail View (Right Panel)**
+    - **Main sprite** (official artwork) with name.
+    - **Normal & Shiny sprites** (toggle front/back with the one button).
+    - Click any sprite for a **full‑screen popup preview**.
+
+
+- **Tabbed Information Sections**
+    - **Description** – Base stats (HP, Attack, Defense, etc.) and extra data (height, weight, capture rate, …).
+    - **Sprites** – All sprites grouped by **generation**, each with a clickable preview.
+    - **Evolutions** – Evolution chain displayed with images and conditions (level, trigger).
+    - **Locations** – Areas where the Pokémon can be found, grouped by region (if data available).
+
+
+- **Responsive & Modern UI**
+    - Rounded corners, smooth colour palette, and adaptive layout.
+    - Pagination controls (Previous / Next) for easy navigation.
+
+
+- **FastAPI Backend Integration**
+    - All data is served from a local **FastAPI/PostgreSQL** instance (repository available separately).
+    - Endpoints for detailed Pokémon data, suggestions, and evolution chains.
+
+## 🛠️ Technologies
 
 - **Python 3.11.14**
 - **Kivy** – Cross-platform Python framework for GUI development
@@ -14,15 +49,20 @@ This project is a desktop Pokédex application that allows users to search, brow
 - **Requests** – HTTP library for API communication
 - **Pillow** – Image processing support
 - **PyGlet** & **Arcade** – Multimedia and game libraries (used by Kivy dependencies)
+- **PyInstaller** – For building standalone executables
 - **Pymunk** – Physics engine (optional, for advanced interactions)
 - **UV** – Fast Python package installer and resolver
 
-## Installation and Usage
+*Backend stack (separate repository): FastAPI, SQLAlchemy, PostgreSQL, aiohttp*
+
+## 🚀 Installation and Usage
 
 ### Prerequisites
 
 - Python 3.11.14 installed on your system
-- [UV](https://docs.astral.sh/uv/) installed (modern Python package manager)
+- [UV](https://docs.astral.sh/uv/) installed (modern Python package manager) or `pip`
+- The **FastAPI backend** must be running locally.
+See the [backend repository](https://github.com/danielmgmora/pokeapi-fastapi.git) for setup instructions (default URL: http://localhost:8000).
 
 ### Running the Application
 
@@ -50,9 +90,9 @@ This project is a desktop Pokédex application that allows users to search, brow
     ```bash
     python main.py
 
-## Building Executables
+## 📦 Building Executables
 
-To create standalone executables for different operating systems, you can use PyInstaller. Note that building for each OS typically requires running the build process on that specific OS (or using cross-compilation tools).
+To create standalone executables for different operating systems, you can use PyInstaller. Building for each OS typically requires running the build process on that specific OS (or using cross-compilation tools).
 
 ### Installation and Setup for Building
 
@@ -77,28 +117,30 @@ To create standalone executables for different operating systems, you can use Py
 3. macOS 
     ```bash
     pyinstaller --onefile --windowed --name "PythonPokedex" main.py
+   
+For detailed platform‑specific notes and advanced `.spec` configuration, see the [PyInstaller documentation](https://pyinstaller.org/).
 
 ## Platform-Specific Notes
 
 ### Windows:
-- The executable will be created in the dist folder
+- The executable will be created in the `dist` folder
 - You might need to install Microsoft Visual C++ Redistributable on target machines
 
-#### Linux:
+### Linux:
 - Ensure all dependencies are installed on the target system
-- You may need to use --add-data flag for resource files
+- You may need to use `--add-data` flag for resource files
 
-#### macOS:
+### macOS:
 - You may need to codesign the app for distribution
-- Consider using --osx-bundle-identifier for proper app bundling
+- Consider using `--osx-bundle-identifier` for proper app bundling
 
 ## Advanced PyInstaller Configuration
 
-- For a more robust build configuration, create a .spec file:
+- For a more robust build configuration, create a `.spec` file:
     ```bash
     pyinstaller --onefile --windowed --add-data "assets:assets" --icon="icon.ico" main.py
 
-- Then modify the generated .spec file to include Kivy dependencies properly:
+- Then modify the generated `.spec` file to include Kivy dependencies properly. Example:
     ```python
     # -*- mode: python ; coding: utf-8 -*-
 
@@ -154,24 +196,34 @@ To create standalone executables for different operating systems, you can use Py
     
     # Or for iOS (requires macOS and Xcode)
     buildozer ios debug
+  
+# 🔧 Project Structure
+- This project uses this structure
+    ```python
+    pokedex-kivy-python/
+    ├── main.py              # Application entry point
+    ├── pokedex.kv           # Kivy language UI definition
+    ├── requirements.txt     # Python dependencies
+    ├── assets/              # (Optional) local images, icons
+    └── README.md
 
-# Troubleshooting
+# ⚠️ Troubleshooting
 
 ## Common Issues
 
-1. **Missing dependencies:** Ensure all packages in requirements.txt are installed with UV
+1. **Missing dependencies:** Ensure all packages in `requirements.txt` are installed with UV
 2. **Kivy installation problems:** Refer to [Kivy's official documentation]((https://kivy.org/doc/stable/gettingstarted/installation.html))
 3. **API rate limiting:** PokeAPI has rate limits; consider implementing caching
 4. **Executable size:** PyInstaller bundles many files; use UPX compression to reduce size
-5. **UV environment issues:** Make sure you're using the correct Python version with uv python --version
+5. **UV environment issues:** Make sure you're using the correct Python version with `uv python --version`.
 
 ## Getting Help
 
 If you encounter issues:
 
-- Check the logs/ directory for error logs
+- Check the `logs/` directory for error logs
 - Ensure your Python version matches (3.11.14)
-- Verify all dependencies are correctly installed with uv pip list
+- Verify all dependencies are correctly installed with `uv pip list`
 - Check UV's virtual environment is activated
 
 ## Development with UV
@@ -193,18 +245,21 @@ If you encounter issues:
     # Sync environment
     uv pip sync requirements.txt
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Feel free to open issues or submit pull requests.
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](https://license/) file for details.
 
-Pokémon data disclaimer: This application uses data from the [PokeAPI](https://pokeapi.co/). Pokémon and Pokémon character names are trademarks of Nintendo. This project is not affiliated with, endorsed, or sponsored by Nintendo, The Pokémon Company, or PokeAPI.
+Pokémon data disclaimer: This application uses data from the [PokeAPI](https://pokeapi.co/).\
+*Pokémon and Pokémon character names are trademarks of Nintendo. This project is not affiliated with, endorsed, or sponsored by Nintendo, The Pokémon Company, or PokeAPI*.
 
-## Acknowledgments
+## 🙏 Acknowledgements
 - [Kivy Team](https://kivy.org/) for the excellent GUI framework
 - [PokeAPI](https://pokeapi.co/) for providing comprehensive Pokémon data
 - [UV Project](https://docs.astral.sh/uv/) for the fast Python package manager
-- All contributors and testers of this project
+- Special thanks to all contributors and testers who helped shape this release. Your feedback was invaluable. 
+
+For questions or support, please open an issue on our repository or contact the development team.
